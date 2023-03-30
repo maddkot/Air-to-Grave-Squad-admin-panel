@@ -41,6 +41,7 @@ const SquadItem = ({ item, onClose }: { item: TSquad, onClose: () => void }) => 
             const res = await warnSquadApi({ item, value: warnSquad });
             setWarnSquad('');
             //openMesageInfo(res.payload)
+            onClose()
             return res
         } catch (error) {
             console.log(error)
@@ -52,6 +53,7 @@ const SquadItem = ({ item, onClose }: { item: TSquad, onClose: () => void }) => 
             const res = await banSquadApi({ item, value: disbandReason });
             setDisbandREason('');
             //openMesageInfo(res.payload)
+            onClose()
             return res
         } catch (error) {
             console.log(error)
@@ -63,15 +65,15 @@ const SquadItem = ({ item, onClose }: { item: TSquad, onClose: () => void }) => 
             <IconButton className={styles.onClose} onClick={onClose}><CloseIcon /></IconButton>
             <div className={styles.infoContainer}>
                 <div className={styles.container}>
-                    <h3>Расформировать сквад</h3>
-                    <TextField label="Введите причину" variant="outlined" onChange={handlerDisbandSquadReason} value={disbandReason}/>
-                    <Button disabled={disbandReason.length <= 0 && true} onClick={disbandSquad} variant="contained">Расформировать</Button>
-                </div>
-                <div className={styles.container}>
                     <h3>Отправить сообщение всему отряду</h3>
                     <TextField label="Введите сообщение" variant="outlined" onChange={handlerWarnSquadReason} value={warnSquad}/>
                     <Button disabled={warnSquad.length <= 0 && true} onClick={WarnSquad} variant="contained">Отправить сообщение</Button>
                 </div>
+                <div className={styles.container}>
+                    <h3>Расформировать сквад</h3>
+                    <TextField label="Введите причину" variant="outlined" onChange={handlerDisbandSquadReason} value={disbandReason}/>
+                    <Button disabled={disbandReason.length <= 0 && true} onClick={disbandSquad} variant="contained">Расформировать</Button>
+                </div>                
             </div>
             
         </div>
