@@ -1,0 +1,29 @@
+.pageContent {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;    
+    @media screen and (max-width: 490px) {
+        align-items: center;
+    }
+}
+.centerContentContainer {
+    max-width: 479px;
+    width: 479px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    @media screen and (max-width: 700px) {        
+        width: 328px
+    }
+}
+
+.mainA2GLogo {    
+    margin-bottom: 85px;
+    align-self: center;
+    @media screen and (max-width: 490px) {
+        align-self: center;
+        margin-bottom: 69px;
+    }
+}

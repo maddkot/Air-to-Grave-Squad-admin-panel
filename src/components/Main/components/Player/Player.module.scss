@@ -1,0 +1,24 @@
+.button {    
+    border-radius: 10px;
+    border: 1px solid #fff;
+    outline: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 5px;
+    &:hover {
+        cursor: pointer;
+        opacity: 0.4;
+    }
+}
+
+.icons {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.title {
+    margin: 0 auto 0;
+}
