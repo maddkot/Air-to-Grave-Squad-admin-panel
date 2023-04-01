@@ -32,32 +32,11 @@ type teamProps = {
 
 
 const Team = ({ team, teamName, squadList }: teamProps) => {
-    
-/*     const groupSquad = team.reduce<Record<any, any>>((r, i) => {
-
-        r[i.squadId] = r[i.squadId] || [];
-        //let squadName = squadList.filter(item => item.id === i.squadId)
-        //i = {...i, squadName: squadName[0].name }
-        r[i.squadId].push(i);
-        //console.log(r, 'r')
-        return r;
-    }, []) */
-
-   // const squadParty = squadList.
     const groupSquad = squadList.map((squad) => {
-        const squads = team.filter((person) => person.squadId === squad.id)
-       //console.log(squads, 'squads')
-        return {...squad, players: squads}
+        const squads = team.filter((person) => person.squadId === squad.id);
+        const leader = team.filter((leader) => leader.leader && leader.squadId === squad.id)
+        return {...squad, players: squads, leader}
     })
-    //console.log(groupSquad, 'squadList')
-    // console.log(groupSquad, 'groupSquad')
-
-    /* {groupSquad.map((item: TPlayer[], indx: React.Key ) => {
-        return (
-                <Squads squad={item} key={indx}/>
-            )
-        }
-    )}  */
 
 
     return (

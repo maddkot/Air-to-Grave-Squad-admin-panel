@@ -6,7 +6,7 @@ export const getGameinfo = async () => {
         const response = await customAxios.get('/gameinfo');
         return response.data
     } catch (error) {
-        console.log(error, 'errorCatch');
+        
         if (axios.isAxiosError(error)) {
             throw error.response?.data;
         }
@@ -22,7 +22,7 @@ export const getBansInfo = async () => {
         });
         return response.data
     } catch (error) {
-        console.log(error, 'errorCatch');
+        
         if (axios.isAxiosError(error)) {
             throw error.response?.data;
         }
@@ -44,7 +44,7 @@ export const warnPlayer = async ({ item, value }: {item: any, value: string}) =>
         return response.data
     }
     catch (error) {
-        console.log(error, 'errorCatch');
+        
         if (axios.isAxiosError(error)) {
             throw error.response?.data;
         }
@@ -66,7 +66,7 @@ export const kickPlayer = async ({ item, value }: {item: any, value: string}) =>
         return response.data
     }
     catch (error) {
-        console.log(error, 'errorCatch');
+        
         if (axios.isAxiosError(error)) {
             throw error.response?.data;
         }
@@ -91,7 +91,7 @@ export const banPlayer = async ({ item, value }: {item: any, value: any}) => {
         return response.data
     }
     catch (error) {
-        console.log(error, 'errorCatch');
+        
         if (axios.isAxiosError(error)) {
             throw error.response?.data;
         }
@@ -112,7 +112,7 @@ export const unbanPlayer = async ({ item, value }: {item: any, value: any}) => {
         return response.data
     }
     catch (error) {
-        console.log(error, 'errorCatch');
+        
         if (axios.isAxiosError(error)) {
             throw error.response?.data;
         }
@@ -134,7 +134,7 @@ export const warnSquadApi = async ({ item, value }: {item: any, value: string}) 
         return response.data
     }
     catch (error) {
-        console.log(error, 'errorCatch');
+        
         if (axios.isAxiosError(error)) {
             throw error.response?.data;
         }
@@ -156,7 +156,28 @@ export const banSquadApi = async ({ item, value }: {item: any, value: string}) =
         return response.data
     }
     catch (error) {
-        console.log(error, 'errorCatch');
+        
+        if (axios.isAxiosError(error)) {
+            throw error.response?.data;
+        }
+    }
+}
+
+export const setNextLayer = async ( value: string ) => {
+    console.log(value)
+    try {
+        const response = await customAxios.post('/command/setnextlayer', 
+                value
+        , {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'text/plain' 
+            }
+        })
+        return response.data
+    }
+    catch (error) {
+        
         if (axios.isAxiosError(error)) {
             throw error.response?.data;
         }

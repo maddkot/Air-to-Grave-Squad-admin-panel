@@ -5,6 +5,7 @@ import HttpsIcon from '@mui/icons-material/Https';
 import { Button, Drawer } from '@mui/material';
 import { useCallback, useState } from 'react';
 import SquadItem from '../SquadItem/SquadItem';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 
 type TPlayer = {
     id: number,
@@ -28,12 +29,11 @@ type TSquad = {
     name: string,
     size: number,
     teamId: number,
-    players: TPlayer[]
+    players: TPlayer[],
+    leader: TPlayer[]
 }
 
-const Squads = ({ squad }: squadsProps) => {
-    const test = squad.filter((item: any) => item.players.includes(item.creatorSteamId))
-        console.log(test,'test')
+const Squads = ({ squad }: squadsProps) => {       
     
     const [squadSelected, setSquad] = useState<TSquad | null>(null);
     const [popup, setTogglePopup] = useState(false);
@@ -49,14 +49,18 @@ const Squads = ({ squad }: squadsProps) => {
     return (
         <>{
             squad.sort((a, b) => a.id - b.id).map((item: TSquad) => {
-                const style = item.name === 'Без отряда' ? styles.withoutSquad : styles.squadContainer;               
+                const style = item.name === 'Без отряда' ? styles.withoutSquad : styles.squadContainer;
                 return (
                     <div key={item.id} className={style}>
-                        <div  className={styles.titleContainer}>
+                        <div className={styles.titleContainer}>
                             <Button variant='text' color='info' onClick={() => selectSquad(item)} className={styles.squadName}>{item.name}</Button>
                             {!(item.name === 'Без отряда') && (item.locked ? < HttpsIcon sx={{ color: 'red' }} /> : <LockOpenIcon />)}
                             
-                        </div>                        
+                        </div>
+                        {
+                            !(item.name === 'Без отряда') && <h6 className={styles.creatorItem}>Создатель сквада: {item.creatorName} {<a className={styles.link} href={`https://steamcommunity.com/profiles/${item.creatorSteamId}/`} target='_blank' rel="noreferrer">{item.creatorSteamId}</a>} {item.creatorSteamId !== item.leader[0].steamId && <PriorityHighIcon sx={{ color: 'red', width: '15px' }} />}</h6>
+                            
+                        }
                         <Players players={item.players} />
                         {
                                 squadSelected &&

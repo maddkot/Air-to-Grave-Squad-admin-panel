@@ -49,4 +49,13 @@
     align-items: center;
     min-height: 100vh;
     flex-direction: column;   
-} 
+}
+
+.selectMap div{
+    width: 23px;
+    height: 3px;
+    padding: 0px !important;
+    border: none;
+    min-width: 0 !important;
+    background-color: rgb(247, 247, 247) !important;
+}

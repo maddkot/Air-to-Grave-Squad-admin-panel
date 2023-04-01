@@ -21,7 +21,6 @@ const Login = () => {
     const handlerAuth = async() => {
         try {
             const response = await getUserData({ login, password })
-            console.log(response, 'response');
             localStorage.setItem('userData', JSON.stringify(response));
             navigate('/admins', {replace: true});
             return;

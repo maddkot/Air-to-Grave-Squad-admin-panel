@@ -42,32 +42,6 @@ const Players = ({ players }: playerProps) => {
     const [popup, setTogglePopup] = useState(false);
 
     const toggleDrawer = (open: boolean) => setTogglePopup(open);
-   /*  (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
-
-      setTogglePopup(open);
-    }; */
-
-/*     const handlerWarPlayer = async (item: any, value: any) => {
-        try {
-            const res = await warnPlayer({ item, value });
-            console.log(res, 'res warn');
-            return res
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const handlerValue = (event: any) => {
-        setValue(event.target.value)
-    } */
-
 
     const icons:any = {
         LAT: LAT,
@@ -88,7 +62,10 @@ const Players = ({ players }: playerProps) => {
         Ambusher: Ambusher,
         Infiltrator: Infiltrator,
         Saboteur: Infiltrator,
-        Pilot: Pilot
+        Pilot: Pilot,
+        Sapper: Engineer,
+        Sniper: Marksman,
+        Raider: Ambusher
     }
     const [playerItem, setItem] = useState<TPlayer | null>(null)
 

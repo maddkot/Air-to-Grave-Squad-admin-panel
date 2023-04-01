@@ -64,6 +64,7 @@ const SquadItem = ({ item, onClose }: { item: TSquad, onClose: () => void }) => 
         <div className={styles.rootContainer}>
             <IconButton className={styles.onClose} onClick={onClose}><CloseIcon /></IconButton>
             <div className={styles.infoContainer}>
+                <h4>Создатель сквада: {item.creatorName} {<a className={ styles.link} href={`https://steamcommunity.com/profiles/${item.creatorSteamId}/`} target='_blank' rel="noreferrer">{item.creatorSteamId}</a>}</h4>
                 <div className={styles.container}>
                     <h3>Отправить сообщение всему отряду</h3>
                     <TextField label="Введите сообщение" variant="outlined" onChange={handlerWarnSquadReason} value={warnSquad}/>

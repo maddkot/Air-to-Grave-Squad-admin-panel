@@ -31,7 +31,7 @@ const Bans = () => {
     const unban = async (item: any) => {
         try {
             const res = await unbanPlayer({ item, value: 'Разбанили' });
-            console.log(item, 'item')
+            
             refetch();
             return res            
         } catch (error) {
@@ -116,8 +116,7 @@ const Bans = () => {
             <h1>Ошибка загрузки</h1>
             <p>Обновите страницу</p>
         </Box>
-    )
-    console.log(data, 'data')
+    )  
 
     
 

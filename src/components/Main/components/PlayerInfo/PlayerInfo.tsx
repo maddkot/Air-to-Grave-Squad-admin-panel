@@ -86,7 +86,6 @@ const Playerinfo = memo(({ item, onClose, openMesageInfo }: { item: TPlayer, onC
 
     const BanPlayer = async () => {
         try {
-            console.log(item, 'item',banReason, 'banReason' )
              const res = await banPlayer({ item, value: banReason });
             setBanReason({
                 reason: '',
