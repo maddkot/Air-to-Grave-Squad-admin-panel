@@ -32,7 +32,8 @@ const period = [
 ]
 
 const Playerinfo = memo(({ item, onClose, openMesageInfo }: { item: TPlayer, onClose: () => void, openMesageInfo: (res: any) => void }) => {
-   
+    const playersRoles = JSON.parse(localStorage.getItem('userData') || '{}');
+    const accessRoles = !playersRoles.roles.includes('ADMIN');
     const [warn, setWarn] = useState('');
     const handlerWarnPlayer = (event: React.ChangeEvent<HTMLInputElement>) => {
         setWarn(event.target.value)
@@ -143,7 +144,7 @@ const Playerinfo = memo(({ item, onClose, openMesageInfo }: { item: TPlayer, onC
                             </TextField>
                     </div>
                     <div>
-                        <Checkbox checked={banReason.perm} onChange={handlerPermBan} /><span>Выписать пермач</span>
+                        <Checkbox disabled={accessRoles} checked={banReason.perm} onChange={handlerPermBan} /><span>Выписать пермач</span>
                     </div>                    
                     <Button disabled={banReason.reason.length <= 0 && true} onClick={BanPlayer} variant="contained">Отправить</Button>
                 </div>

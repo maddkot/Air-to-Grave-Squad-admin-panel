@@ -1,9 +1,10 @@
 import styles from './AdminPanel.module.scss';
 import {useQuery} from '@tanstack/react-query'
-import { getGameinfo, setNextLayer } from "api/adminsPanel/adminPanels";
-import { Box, CircularProgress, MenuItem, Select, SelectChangeEvent, Snackbar } from "@mui/material";
+import { banPlayer, getGameinfo, setNextLayer } from "api/adminsPanel/adminPanels";
+import { Box, Button, Checkbox, CircularProgress, Drawer, IconButton, MenuItem, Select, SelectChangeEvent, Snackbar, TextField } from "@mui/material";
 import Team from '../Team/Team';
 import { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 
 type TPlayer = {
     id: number,
@@ -73,9 +74,21 @@ const maps = [
 ]
     
 const AdminsPanel = () => {
+
+    const playersRoles = JSON.parse(localStorage.getItem('userData') || '{}');
+    const accessRoles = playersRoles.roles.includes('ADMIN');
     const [openInfo, setOpenInfo] = useState(false);
     const [apiMessage, setApiMessage] = useState('');
-    const [disabled, setDisabled] = useState(false)
+    const [disabled, setDisabled] = useState(false);
+    const [banReason, setBanReason] = useState({
+        reason: '',
+        duration: '',
+        timeUnit: 'DAY',
+        perm: false,
+        steamId: '',
+        nickname: ''
+    });
+    const [popup, setTogglePopup] = useState(false);
     const { isLoading, error, data } = useQuery({
         queryKey: ['repoData'],
         queryFn: getGameinfo,
@@ -103,14 +116,14 @@ const AdminsPanel = () => {
       
     const teamOne: TPlayer[] = [];
     const teamTwo: TPlayer[] = [];
-    data.playersList.forEach((item: any) => {
+    data.gameInfo.playersList.forEach((item: any) => {
         if (item.teamId === 1) teamOne.push(item)
         else { teamTwo.push(item)}
     })   
 
     const squadsInfoTeamOne: TSquad[] = [];
     const constSquadInfoTeamTwo: TSquad[] = [];
-    data.squadsList.forEach((item: any) => {
+    data.gameInfo.squadsList.forEach((item: any) => {
         if (item.teamId === 1) squadsInfoTeamOne.push(item)
         else { constSquadInfoTeamTwo.push(item)}
     }) 
@@ -142,26 +155,129 @@ const AdminsPanel = () => {
         setApiMessage(res);
         setOpenInfo(true);        
         return
+    }   
+
+    const period = [
+        {
+            value: 'DAY',
+            label: 'дни',
+        },
+        {
+            value: 'MINUTE',
+            label: 'минуты',
+        },
+        {
+            value: 'SECOND',
+            label: 'секунды',
+        },
+          
+    ]
+
+    
+    const handlerBanReasonPlayer = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBanReason({ ...banReason, reason: event.target.value })
+    }
+    const handlerBanPeriodPlayer = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBanReason({ ...banReason, timeUnit: event.target.value })
+    }
+    const handlerTimeBan = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBanReason({ ...banReason, duration: event.target.value })
+    }
+    const handlerPermBan = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBanReason({ ...banReason, perm: event.target.checked })
+    }
+    const handlerSteamIdBan = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBanReason({ ...banReason, steamId: event.target.value })
+    }
+    const handlerNickBan = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBanReason({ ...banReason, nickname: event.target.value })
     }
 
+    
+
+    const toggleDrawer = (open: boolean) => setTogglePopup(open);
+
+    const BanPlayer = async () => {
+        try {            
+            const res = await banPlayer({ item: banReason , value: banReason });
+            setBanReason({
+                reason: '',
+                duration: '',
+                timeUnit: 'DAY',
+                perm: false,
+                steamId: '',
+                nickname: ''
+            });            
+            setTogglePopup(false)
+            return res            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const banDisconnectPlayer = (item: any) => {
+        setBanReason({...item, steamId: item.steamId, nickname: item.nickname})
+        toggleDrawer(true);
+    }
     return (
         <>
             <header className={styles.headerMainInfo}>
-                <h4 className={styles.title}>Текущая карта: <span className={styles.subtitle}>{data.layer}</span></h4>
-                <h4 className={styles.title}>Следующая карта: <span className={styles.subtitle}>{data.nextLayer}</span><Select disabled={disabled} disableUnderline={true} className={styles.selectMap} size='small' sx={{':before': {
-              borderBottom: 'none'
-            }, ':hover': {borderBottom: 'none'}}} value='' onChange={handleChangeLayer} variant='standard' >
+                <h4 className={styles.title}>Текущая карта: <span className={styles.subtitle}>{data.gameInfo.layer}</span></h4>
+                <h4 className={styles.title}>Следующая карта: <span className={styles.subtitle}>{data.gameInfo.nextLayer}</span>{accessRoles && <Select disabled={disabled} disableUnderline={true} className={styles.selectMap} size='small' sx={{
+                    ':before': {
+                        borderBottom: 'none'
+                    }, ':hover': { borderBottom: 'none' }
+                }} value='' onChange={handleChangeLayer} variant='standard' >
                     {maps.map(item => (
                         <MenuItem key={item} value={item}>
                             {item}
                         </MenuItem>
                     ))}
-                 </Select></h4>
-                <h4 className={styles.title}>Игроков на сервере: <span className={styles.subtitle}>{data.playersList.length}</span></h4>
+                </Select>}</h4>
+                <h4 className={styles.title}>Игроков на сервере: <span className={styles.subtitle}>{data.gameInfo.playersList.length}</span></h4>
             </header>
-            <main className={styles.main }>
-                <Team team={teamOne} teamName={data.teams[0].name } squadList={squadsInfoTeamOne}/>
-                <Team team={teamTwo} teamName={data.teams[1].name } squadList={constSquadInfoTeamTwo} />                 
+            <main className={styles.main}>
+                <div className={styles.leftContainer}>
+                    <div className={styles.disconnectedPlayersContainer} >
+                        <h3 className={styles.disconnectedPlayersTitle}>Отключенные пользователи:</h3>
+                        {                  
+                            <div className={styles.disconnectPlayers}>
+                                {data.disconnectedPlayers.map((item: any) => {
+                                    const playerlink = `https://steamcommunity.com/profiles/${item.steamId}/`
+                                    return (
+                                        <div className={styles.disconectPlayerContainer} key={item.steamId + Math.random()} >
+                                            <h4 onClick={() => banDisconnectPlayer(item)} className={styles.disconnectedPlayersItem}>{item.nickname}</h4>
+                                        <a className={styles.link} href={playerlink} target='_blank' rel="noreferrer">{item.steamId}</a>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            
+                            
+                        }
+                    </div>
+                    <div className={styles.disconnectedPlayersContainer} >
+                    <h3 className={styles.disconnectedPlayersTitle}>История карт:</h3>
+                    {                  
+                        <div className={styles.disconnectPlayers}>
+                                {data.layerHistory.map((item: any) => {
+                                    const startDate = new Date(item.startDate).toLocaleString()
+                                return (<div style={{ margin: '10px' }} key={item.startDate + Math.random()} >
+                                        <h4 className={styles.disconnectedPlayersTitle}>{item.layerName}</h4>
+                                        <span>{startDate}</span>
+                                    </div>
+                            )})}
+                        </div>
+                        
+                        
+                    }
+                </div>
+                </div>
+                
+                <div className={styles.teamContainer}>
+                    <Team team={teamOne} teamName={data.gameInfo.teams[0].name } squadList={squadsInfoTeamOne}/>
+                    <Team team={teamTwo} teamName={data.gameInfo.teams[1].name } squadList={constSquadInfoTeamTwo} />
+                </div>                
+                                 
             </main>
             <Snackbar
                 open={openInfo}
@@ -170,6 +286,59 @@ const AdminsPanel = () => {
                 message={apiMessage}
                 security='info'                                
             />
+                        {
+                
+                <Drawer
+                    sx={{'& .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop': { backgroundColor: 'rgba(0,0,0,0.3)'}}}
+                    anchor={'right'}
+                    open={popup}
+                    onClose={() => toggleDrawer(false)}
+            >   
+                 <IconButton className={styles.onClose} onClick={() => setTogglePopup(false)}><CloseIcon /></IconButton>
+                {<div className={styles.container}>
+                <h3>Забанить</h3>
+                <TextField label="Введите причину" variant="outlined" onChange={handlerBanReasonPlayer} value={banReason.reason} />
+            <div className={styles.inputContainer}>
+                    <TextField
+                        label="Введите никнейм"  
+                        onChange={handlerNickBan}
+                        value={banReason.nickname}
+                        sx={{ width: '100%' }}
+                    />
+                    <TextField
+                        label="Введите steaId"                            
+                        onChange={handlerSteamIdBan}
+                        value={banReason.steamId}
+                        sx={{ width: '100%' }}
+                    />
+                    <TextField
+                        label="Выберите продолжительность"
+                        sx={{ width: '100%' }}
+                        onChange={handlerTimeBan}
+                        value={banReason.duration}
+                    />
+                    <TextField          
+                        select
+                        label="Cрок"
+                        defaultValue={'DAY'}
+                        required
+                        onChange={handlerBanPeriodPlayer}
+                        sx={{width: '100%'}}
+                        >
+                        {period.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                            </MenuItem>
+                        ))}
+                        </TextField>
+                </div>
+                <div>
+                    <Checkbox disabled={!accessRoles} checked={banReason.perm} onChange={handlerPermBan} /><span>Выписать пермач</span>
+                </div>                    
+                <Button  onClick={BanPlayer} variant="contained">Отправить</Button>
+            </div>}
+            </Drawer>
+        }
         </>
         
     )

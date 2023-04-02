@@ -21,6 +21,8 @@ type TBans = {
 }
 
 const Bans = () => {
+    const playersRoles = JSON.parse(localStorage.getItem('userData') || '{}');
+    const accessRoles = !playersRoles.roles.includes('ADMIN');
     const { isLoading, error, data, refetch } = useQuery({
         queryKey: ['repoBans'],
         queryFn: getBansInfo,
@@ -204,7 +206,7 @@ const Bans = () => {
                             </TextField>
                     </div>
                     <div>
-                        <Checkbox checked={banReason.perm} onChange={handlerPermBan} /><span>Выписать пермач</span>
+                        <Checkbox disabled={accessRoles} checked={banReason.perm} onChange={handlerPermBan} /><span>Выписать пермач</span>
                     </div>                    
                     <Button disabled={banReason.reason.length <= 0 && true} onClick={BanPlayer} variant="contained">Отправить</Button>
                 </div>}
