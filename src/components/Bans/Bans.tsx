@@ -179,7 +179,7 @@ const Bans = () => {
                             sx={{ width: '100%' }}
                         />
                         <TextField
-                            label="Введите steaId"                            
+                            label="Введите steamId"                            
                             onChange={handlerSteamIdBan}
                             value={banReason.steamId}
                             sx={{ width: '100%' }}

@@ -58,7 +58,7 @@ const Squads = ({ squad }: squadsProps) => {
                             
                         </div>
                         {
-                            !(item.name === 'Без отряда') && <h6 className={styles.creatorItem}>Создатель сквада: {item.creatorName} {<a className={styles.link} href={`https://steamcommunity.com/profiles/${item.creatorSteamId}/`} target='_blank' rel="noreferrer">{item.creatorSteamId}</a>} {item.creatorSteamId !== item.leader[0].steamId && <PriorityHighIcon sx={{ color: 'red', width: '15px' }} />}</h6>
+                          item.leader[0] && !(item.name === 'Без отряда') && <h6 className={styles.creatorItem}>Создатель сквада: {item.creatorName} {<a className={styles.link} href={`https://steamcommunity.com/profiles/${item.creatorSteamId}/`} target='_blank' rel="noreferrer">{item.creatorSteamId}</a>} {(item.leader[0].steamId &&item.creatorSteamId !== item.leader[0].steamId) && <PriorityHighIcon sx={{ color: 'red', width: '15px' }} />}</h6>
                             
                         }
                         <Players players={item.players} />

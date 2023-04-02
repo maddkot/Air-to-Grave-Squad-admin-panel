@@ -215,7 +215,8 @@ const AdminsPanel = () => {
         }
     }
     const banDisconnectPlayer = (item: any) => {
-        setBanReason({...item, steamId: item.steamId, nickname: item.nickname})
+        
+        setBanReason({...item, steamId: item.steamId, nickname: item.nickname, perm: banReason.perm, timeUnit: banReason.timeUnit  })
         toggleDrawer(true);
     }
     return (
@@ -241,7 +242,7 @@ const AdminsPanel = () => {
                         <h3 className={styles.disconnectedPlayersTitle}>Отключенные пользователи:</h3>
                         {                  
                             <div className={styles.disconnectPlayers}>
-                                {data.disconnectedPlayers.map((item: any) => {
+                                {data.disconnectedPlayers.reverse().map((item: any) => {
                                     const playerlink = `https://steamcommunity.com/profiles/${item.steamId}/`
                                     return (
                                         <div className={styles.disconectPlayerContainer} key={item.steamId + Math.random()} >
@@ -306,7 +307,7 @@ const AdminsPanel = () => {
                         sx={{ width: '100%' }}
                     />
                     <TextField
-                        label="Введите steaId"                            
+                        label="Введите steamId"                            
                         onChange={handlerSteamIdBan}
                         value={banReason.steamId}
                         sx={{ width: '100%' }}
