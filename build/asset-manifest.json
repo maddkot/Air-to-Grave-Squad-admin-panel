@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "./static/css/main.00b4ed77.css",
+    "main.js": "./static/js/main.18122394.js",
+    "static/media/a2g.jpeg": "./static/media/a2g.68c05f7048cd0238668a.jpeg",
+    "static/media/slTex.png": "./static/media/slTex.8309ecc77b29461fcc74.png",
+    "static/media/AutomaticRifleman.png": "./static/media/AutomaticRifleman.290292903949b0192cc7.png",
+    "static/media/babah.png": "./static/media/babah.155f46b86150fe0285fe.png",
+    "static/media/sniper.png": "./static/media/sniper.488f4eb3bf7fba2057db.png",
+    "static/media/heavugunner.png": "./static/media/heavugunner.e61e4e31a8e9f6e1dfe0.png",
+    "static/media/rifleman.png": "./static/media/rifleman.3015f94748bd122b3e77.png",
+    "static/media/heavyrpg.png": "./static/media/heavyrpg.dc5c7f6dcb3cf57c04dd.png",
+    "static/media/rangeer.png": "./static/media/rangeer.4efec722e5f30ef7894b.png",
+    "static/media/rpg.png": "./static/media/rpg.d9ebbcfdbe58d3a127d6.png",
+    "static/media/engeneer.png": "./static/media/engeneer.8e37b66fc1f8a4ec5400.png",
+    "static/media/sl.png": "./static/media/sl.6a286f50876bb932ce5e.png",
+    "static/media/crewman.png": "./static/media/crewman.0ec514068a5fb2d003e5.png",
+    "static/media/slpilot.png": "./static/media/slpilot.20422cb6bb9ab89f0dfb.png",
+    "index.html": "./index.html",
+    "main.00b4ed77.css.map": "./static/css/main.00b4ed77.css.map",
+    "main.18122394.js.map": "./static/js/main.18122394.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.00b4ed77.css",
+    "static/js/main.18122394.js"
+  ]
+}
