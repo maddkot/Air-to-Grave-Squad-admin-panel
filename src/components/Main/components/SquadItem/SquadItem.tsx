@@ -3,26 +3,8 @@ import styles from './SquadItem.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { banSquadApi, warnSquadApi } from 'api/adminsPanel/adminPanels';
+import { TSquad } from 'types/mainTypes';
 
-type TSquad = {
-    creatorName: string,
-    creatorSteamId: string,
-    id: number,
-    locked: boolean,
-    name: string,
-    size: number,
-    teamId: number,
-    players: TPlayer[]
-}
-type TPlayer = {
-    id: number,
-    kit: string,
-    leader: boolean,
-    nickname: string,
-    squadId: number,
-    steamId: string,
-    teamId: number
-}
 
 const SquadItem = ({ item, onClose }: { item: TSquad, onClose: () => void }) => {
     

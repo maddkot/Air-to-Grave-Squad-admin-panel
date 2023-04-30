@@ -1,35 +1,13 @@
 import { Card } from '@mui/material';
 import Squads from '../Squads/Squad';
 import styles from './Team.module.scss';
-
-type TPlayer = {
-    id: number,
-    kit: string,
-    leader: boolean,
-    nickname: string,
-    squadId: number,
-    steamId: string,
-    teamId: number,
-    squadName?: string
-}
-
-type TSquad = {
-    creatorName: string,
-    creatorSteamId: string,
-    id: number,
-    locked: boolean,
-    name: string,
-    size: number,
-    teamId: number
-}
+import { TPlayer, TSquad } from 'types/mainTypes';
 
 type teamProps = {
     team: TPlayer[],
     teamName: string,
     squadList: TSquad[],
 }
-
-
 
 const Team = ({ team, teamName, squadList }: teamProps) => {
     const groupSquad = squadList.map((squad) => {

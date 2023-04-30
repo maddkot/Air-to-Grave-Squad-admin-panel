@@ -1,0 +1,36 @@
+.disconnectedPlayersTitle {
+    text-align: center;
+}
+
+
+
+.disconnectPlayersContainer {
+    overflow: scroll;
+    height: 456px;
+    &::-webkit-scrollbar-thumb {
+        width: 1px;        
+        background-color: rgb(1, 1, 1);
+        border-radius: 20px ;
+    }
+    &::-webkit-scrollbar {
+        width: 5px; /* ширина для вертикального скролла */
+        background-color: inherit; /* высота для горизонтального скролла */
+       
+    }    
+}
+
+.disconectPlayer {
+    border-radius: 10px;
+    border: 1px solid #fff;
+    outline: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 5px;
+    width: 90%;
+    &:hover {
+        cursor: pointer;
+        opacity: 0.4;
+    }
+}

@@ -3,6 +3,10 @@ import {setupInterceptorsTo} from './interceptorsConfig';
 
 const customAxiosInstatnce = axios.create({
    baseURL: 'http://46.174.48.229:57495',
+   /* proxy: {
+      host: 'http://46.174.48.229',
+      port: 57495
+   } */
 })
 
 setupInterceptorsTo(customAxiosInstatnce);

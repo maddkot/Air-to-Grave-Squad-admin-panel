@@ -26,11 +26,31 @@
     width: 300px;
 }
 
+.buttonsmainContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    gap: 5px;
+}
+
 .inputContainer {
     display: flex;
-    flex-direction: column;
-    gap: 5px
+    /* flex-direction: column; */
+    gap: 5px;
+    /* width: 50%; */
+    margin: 10px;
+    justify-content: center;
 }
+
+.banInputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+}
+
 
 .link {
     text-decoration: none;

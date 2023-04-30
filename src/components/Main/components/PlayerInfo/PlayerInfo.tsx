@@ -4,16 +4,8 @@ import { Button, Checkbox, MenuItem, TextField } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { warnPlayer, kickPlayer, banPlayer  } from 'api/adminsPanel/adminPanels';
 import { memo, useState } from 'react';
+import { TPlayer } from 'types/mainTypes';
 
-type TPlayer = {
-    id: number,
-    kit: string,
-    leader: boolean,
-    nickname: string,
-    squadId: number,
-    steamId: string,
-    teamId: number
-}
 
 const period = [
     {
@@ -127,6 +119,7 @@ const Playerinfo = memo(({ item, onClose, openMesageInfo }: { item: TPlayer, onC
                             sx={{ width: '70%' }}
                             onChange={handlerTimeBan}
                             value={banReason.duration}
+                            type='number'
                         />
                         <TextField          
                             select
@@ -144,7 +137,7 @@ const Playerinfo = memo(({ item, onClose, openMesageInfo }: { item: TPlayer, onC
                             </TextField>
                     </div>
                     <div>
-                        <Checkbox disabled={accessRoles} checked={banReason.perm} onChange={handlerPermBan} /><span>Выписать пермач</span>
+                        <Checkbox checked={banReason.perm} onChange={handlerPermBan} /><span>Выписать пермач</span>
                     </div>                    
                     <Button disabled={banReason.reason.length <= 0 && true} onClick={BanPlayer} variant="contained">Отправить</Button>
                 </div>

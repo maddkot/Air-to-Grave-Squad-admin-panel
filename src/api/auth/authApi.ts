@@ -10,7 +10,7 @@ type TUserDataResponse = string[]
 export const getUserData = async ({ login, password }: TLoginData) => {    
     const data = window.btoa(login + ':' + password);    
     try {
-        const response = await axios.post<TUserDataResponse>('/auth', data, {
+        const response = await axios.post<TUserDataResponse>('http://46.174.48.229:57495/auth' /* ('/auth' */, data, {
             headers: {'Content-Type': 'text/plain', 'X-Requested-With': 'XMLHttpRequest'}
         })
         

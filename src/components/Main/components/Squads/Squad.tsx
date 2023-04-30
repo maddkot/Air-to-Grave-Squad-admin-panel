@@ -6,32 +6,15 @@ import { Button, Drawer } from '@mui/material';
 import { useCallback, useState } from 'react';
 import SquadItem from '../SquadItem/SquadItem';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import { TSquad } from 'types/mainTypes';
 
-type TPlayer = {
-    id: number,
-    kit: string,
-    leader: boolean,
-    nickname: string,
-    squadId: number,
-    steamId: string,
-    teamId: number
-}
+
 
 type squadsProps = {
     squad: TSquad[] 
 }
 
-type TSquad = {
-    creatorName: string,
-    creatorSteamId: string,
-    id: number,
-    locked: boolean,
-    name: string,
-    size: number,
-    teamId: number,
-    players: TPlayer[],
-    leader: TPlayer[]
-}
+
 
 const Squads = ({ squad }: squadsProps) => {       
     
@@ -53,7 +36,7 @@ const Squads = ({ squad }: squadsProps) => {
                 return (
                     <div key={item.id} className={style}>
                         <div className={styles.titleContainer}>
-                            <Button variant='text' color='info' onClick={() => selectSquad(item)} className={styles.squadName}>{item.name}</Button>
+                            <Button variant='text' color='info' onClick={() => selectSquad(item)} className={styles.squadName}>{item.name} ({item.id})</Button>
                             {!(item.name === 'Без отряда') && (item.locked ? < HttpsIcon sx={{ color: 'red' }} /> : <LockOpenIcon />)}
                             
                         </div>

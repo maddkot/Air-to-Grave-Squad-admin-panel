@@ -22,16 +22,9 @@ import Pilot from 'assets/images/kit_icons/pilot.png';
 import { Drawer, Snackbar } from '@mui/material';
 import React from 'react';
 import PlayerInfo from '../PlayerInfo/PlayerInfo';
+import { TPlayer } from 'types/mainTypes';
 
-type TPlayer = {
-    id: number,
-    kit: string,
-    leader: boolean,
-    nickname: string,
-    squadId: number,
-    steamId: string,
-    teamId: number
-}
+
 
 type playerProps = {
     players: TPlayer[]

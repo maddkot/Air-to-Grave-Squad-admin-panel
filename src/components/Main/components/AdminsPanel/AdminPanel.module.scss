@@ -59,72 +59,27 @@
     margin: 10px;
     justify-content: center;    
     gap: 50px;
+    flex-wrap: wrap;
     @media screen and (max-width: 800px) {
         flex-direction: column;
         align-items: center;
     }     
 }
 
-.disconnectedPlayersContainer {
-    max-height: 430px;   
-    border-radius: 10px;
-    box-shadow: 0px 10px 10px rgba(186, 179, 186, 0.8);
-    margin: 10px;
-    
-    
-}
-
-.disconnectPlayers {
-    overflow: scroll;
-    height: 356px;
-    &::-webkit-scrollbar-thumb {
-        width: 1px;        
-        background-color: rgb(1, 1, 1);
-        border-radius: 20px ;
-    }
-    &::-webkit-scrollbar {
-        width: 5px; /* ширина для вертикального скролла */
-        background-color: inherit; /* высота для горизонтального скролла */
-       
-    }    
-}
-
-.disconnectedPlayersTitle {
-    margin: 2px;
-    
-}
-
-.disconnectedPlayersItem {
-    
-    &:hover{
-        cursor: pointer;
-        border-bottom: 1px solid black;        
-    }
-}
-
-.disconectPlayerContainer {
-    margin: 10px;
-    padding:  5px;
-    border: 1px solid rgb(48, 48, 48);
-    border-radius: 10px;
-}
 
 .teamContainer {
     display: flex;
     gap: 50px;    
-    justify-content: center;    
+    justify-content: center;
     flex-wrap: wrap;
-    flex-grow: 1;    
-    @media screen and (max-width: 600px) {
-        margin: auto;
-        justify-content: flex-start;
+    @media screen and (max-width: 1300px) {
+        order: -1;
+    }    
+    @media screen and (max-width: 800px) {        
+        margin: auto;        
         width: 300px;
         
     }
-    @media screen and (min-width: 800px) {
-        margin-right: 20%;
-    
-}
 }
 
 .leftContainer {
@@ -141,21 +96,3 @@
     }
 }
 
-.inputContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 5px
-}
-
-.container {
-    padding: 10px;
-    width: 100%;
-    border: 1px solid rgb(182, 181, 181);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: auto;
-    min-width: 300px;
-    width: 300px;
-}
