@@ -1,6 +1,6 @@
 import styles from './AdminPanel.module.scss';
 import {useQuery} from '@tanstack/react-query'
-import { getGameinfo, setNextLayer } from "api/adminsPanel/adminPanels";
+import { chageMapApi, getGameinfo, setNextLayer } from "api/adminsPanel/adminPanels";
 import { Autocomplete, Box,  CircularProgress, Drawer, IconButton, Snackbar, TextField } from "@mui/material";
 import Team from '../Team/Team';
 import { useState } from 'react';
@@ -22,7 +22,9 @@ const AdminsPanel = () => {
     const [disabled, setDisabled] = useState(false);
     const [mapManage , setMapManage] = useState(false)
     const [value, setValue] = useState<string | null>(null);
+    const [value2, setValue2] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState('');
+    const [inputValue2, setInputValue2] = useState('');
 
     const { isLoading, error, data } = useQuery<TMainDataTypes>({
         queryKey: ['repoData'],
@@ -47,6 +49,10 @@ const AdminsPanel = () => {
        
     const handleChangeLayer = (/* event: SelectChangeEvent */value: string | null) => {        
         if(value !== null) nextLayer(value);
+    };
+
+    const handleChangeMap = (/* event: SelectChangeEvent */value: string | null) => {        
+        if(value !== null) changeMap(value);
     };
       
     const teamOne: TPlayer[] = [];
@@ -79,10 +85,27 @@ const AdminsPanel = () => {
             return res;
         } catch (error) {
             console.log(error)
-            openMesageInfo(error)
+            // openMesageInfo(error)
         }
 
-    }  
+    }
+    
+    const changeMap = async (layer: string) => {
+        try {
+            setDisabled(true)
+            const res = await chageMapApi(layer)
+            setMapManage(false);
+            openMesageInfo(res.payload)            
+            setDisabled(false);
+            setInputValue2('')
+            setValue2(null)
+            return;
+        } catch (error) {
+            console.log(error)
+            // openMesageInfo(error.error)
+        }
+
+    } 
 
     const handleCloseInfo = (event: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
@@ -143,7 +166,7 @@ const AdminsPanel = () => {
             >
                 <div style={{marginTop: '20px', marginBottom: "20px"}}>
                 <Autocomplete
-                    disabled={disabledSleectMap||disabled}        
+                    disabled={!accessRoles||disabled }        
                     value={value}
                     onChange={(event: any, newValue: string | null) => {
                         setValue(newValue);
@@ -154,22 +177,24 @@ const AdminsPanel = () => {
                     setInputValue(newInputValue);
                     }}
                     id="controllable-states-demo"
-                    options={selectMaps}
+                    options={maps}
                     sx={{ width: 300, margin: '10px auto ' }}
                     renderInput={(params) => <TextField {...params} label="Сменить следующую карту" />}
                 />
                 <Autocomplete
-                    disabled={/* !accessRoles||disabled */ true}        
-                    value={value}
+                    disabled={disabledSleectMap||disabled}    
+                    value={value2}
                     onChange={(event: any, newValue: string | null) => {
-                        
+                        setValue2(newValue);
+                        handleChangeMap(newValue)
                     }}
-                    inputValue={inputValue}
+                    inputValue={inputValue2}
                     onInputChange={(event, newInputValue) => {
-                    
+                        setInputValue2(newInputValue);
                     }}
                     id="controllable-states-demo"
-                    options={maps}
+                    
+                    options={selectMaps}
                     sx={{ width: 300, margin: 'auto' }}
                     renderInput={(params) => <TextField {...params} label="Сменить карту (заканчивает раунд)" />}
                 />

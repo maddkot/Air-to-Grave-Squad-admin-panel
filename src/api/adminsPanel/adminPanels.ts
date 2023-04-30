@@ -183,3 +183,24 @@ export const setNextLayer = async ( value: string ) => {
         }
     }
 }
+
+export const chageMapApi = async ( value: string ) => {
+    console.log(value)
+    try {
+        const response = await customAxios.post('/command/changelayer', 
+                value
+        , {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'text/plain' 
+            }
+        })
+        return response.data
+    }
+    catch (error) {
+        
+        if (axios.isAxiosError(error)) {
+            throw error.response?.data;
+        }
+    }
+}
