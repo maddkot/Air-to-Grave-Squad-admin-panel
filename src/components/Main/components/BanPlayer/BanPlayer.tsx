@@ -4,6 +4,7 @@ import { banPlayer } from 'api/adminsPanel/adminPanels';
 import { memo, useEffect, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { TDisconectPlayer } from 'types/mainTypes';
+import { PlayerPunishmentHistory } from '../PlayerPunishmentHistory/PlayerPunishmentHistory';
 
 type TBanPlayer = {
     popup: boolean,
@@ -97,7 +98,8 @@ const BanPlayer = ({popup, setTogglePopup, player, setPlayer}:TBanPlayer) => {
             console.log(error)
         }
     }
-    
+
+        
     const playerlink = `https://steamcommunity.com/profiles/${player?.steamId}/` 
     return (
         <>
@@ -157,14 +159,16 @@ const BanPlayer = ({popup, setTogglePopup, player, setPlayer}:TBanPlayer) => {
                     <Checkbox checked={banReason.perm} onChange={handlerPermBan} /><span>Выписать пермач</span>
                 </div>
                 <Button onClick={BanPlayer} variant="contained">Отправить</Button>
-            </div>}
+                </div>}
+                {player && <PlayerPunishmentHistory steamIdProps={player.steamId} />}
         </Drawer>
         <Snackbar
             open={openInfo}
             autoHideDuration={2000}
             onClose={handleCloseInfo}
             message={apiMessage}
-            security='info' />
+                security='info' />
+            
     </>
     )
 }

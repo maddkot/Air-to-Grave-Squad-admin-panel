@@ -11,6 +11,7 @@ import { maps, seedMaps } from 'constants/maps';
 import { RightMainComponent } from '../RightMainComponent/RightMainComponent';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { adminsList } from 'constants/admins';
 
     
 const AdminsPanel = () => {
@@ -57,10 +58,12 @@ const AdminsPanel = () => {
       
     const teamOne: TPlayer[] = [];
     const teamTwo: TPlayer[] = [];
+    let adminsCount: number = 0;
     const squadsInfoTeamOne: TSquad[] = [];
     const constSquadInfoTeamTwo: TSquad[] = [];
     if (data) {
-         data.gameInfo.playersList.forEach((item: any) => {
+        data.gameInfo.playersList.forEach((item: any) => {
+            if (adminsList.includes(item.steamId)) { adminsCount++ }
         if (item.teamId === 1) teamOne.push(item)
         else { teamTwo.push(item)}
     })   
@@ -121,7 +124,7 @@ const AdminsPanel = () => {
         setOpenInfo(true);        
         return
     }
-    
+    console.log(adminsCount)
     if (!data) return null;
     const selectMaps = data?.gameInfo.playersList.length > 20 ? maps : seedMaps
     const disabledSleectMap = data?.gameInfo.playersList.length > 20 ? !accessRoles : false
@@ -137,7 +140,7 @@ const AdminsPanel = () => {
                     {/* {accessRoles &&
                         } */}
                 </h4>
-                <h4 className={styles.title}>Игроков на сервере: <span className={styles.subtitle}>{data.gameInfo.playersList.length}</span></h4>
+                <h4 className={styles.title}>Игроков на сервере: <span className={styles.subtitle}>{data.gameInfo.playersList.length}</span> Админов: <span className={styles.subtitle}>{adminsCount}</span></h4>
             </header>
             <main className={styles.main}>                
                 <LeftMainContainer data={data}/>

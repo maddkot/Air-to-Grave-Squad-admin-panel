@@ -204,3 +204,19 @@ export const chageMapApi = async ( value: string ) => {
         }
     }
 }
+
+export const getPlayerHistory = async(steamId: string) => {
+    try {
+        const res = await customAxios.get(`/bans/player/${steamId}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'text/plain' 
+            }
+        })
+        return res.data 
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            throw error.response?.data;
+        }
+    }
+}

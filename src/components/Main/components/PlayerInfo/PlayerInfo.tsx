@@ -2,9 +2,10 @@ import styles from './PlayerInfo.module.scss';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button, Checkbox, MenuItem, TextField } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import { warnPlayer, kickPlayer, banPlayer  } from 'api/adminsPanel/adminPanels';
-import { memo, useState } from 'react';
+import { warnPlayer, kickPlayer, banPlayer, getPlayerHistory  } from 'api/adminsPanel/adminPanels';
+import { memo, useEffect, useState } from 'react';
 import { TPlayer } from 'types/mainTypes';
+import { PlayerPunishmentHistory } from '../PlayerPunishmentHistory/PlayerPunishmentHistory';
 
 
 const period = [
@@ -24,6 +25,7 @@ const period = [
 ]
 
 const Playerinfo = memo(({ item, onClose, openMesageInfo }: { item: TPlayer, onClose: () => void, openMesageInfo: (res: any) => void }) => {
+      
     const playersRoles = JSON.parse(localStorage.getItem('userData') || '{}');
     const accessRoles = !playersRoles.roles.includes('ADMIN');
     const [warn, setWarn] = useState('');
@@ -93,6 +95,8 @@ const Playerinfo = memo(({ item, onClose, openMesageInfo }: { item: TPlayer, onC
         }
     }
 
+   
+    
     const playerlink = `https://steamcommunity.com/profiles/${item.steamId}/`
     return (
         <div className={styles.rootContainer}>
@@ -142,7 +146,7 @@ const Playerinfo = memo(({ item, onClose, openMesageInfo }: { item: TPlayer, onC
                     <Button disabled={banReason.reason.length <= 0 && true} onClick={BanPlayer} variant="contained">Отправить</Button>
                 </div>
             </div>
-            
+            <PlayerPunishmentHistory steamIdProps={item.steamId} />
         </div>
     )
 })

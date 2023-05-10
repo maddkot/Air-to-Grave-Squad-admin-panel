@@ -23,6 +23,7 @@ import { Drawer, Snackbar } from '@mui/material';
 import React from 'react';
 import PlayerInfo from '../PlayerInfo/PlayerInfo';
 import { TPlayer } from 'types/mainTypes';
+import { adminsList } from 'constants/admins';
 
 
 
@@ -85,21 +86,26 @@ const Players = ({ players }: playerProps) => {
     
         setOpenInfo(false);
         setApiMessage('')
-      };
+    };
     
+    const adminStyle = {
+        borderColor: 'orange'
+    }
     return (
         <React.Fragment>
             {
                 players.sort((a, b) => {
-                    if (a.leader ) return -1
+                    if (a.leader) return -1
                     else return 0
                 }).map((item: TPlayer) => {
                     const splitKitNames = item.kit.split('_')[1]
                     const src = icons[splitKitNames];
-                    
+                    const admin = adminsList.includes(item.steamId) ? adminStyle : {};
+                    console.log(admin)
+
                     return (
                         <React.Fragment key={item.steamId}>
-                            <button onClick={() => selectItem(item)}  className={styles.button}>
+                            <button onClick={() => selectItem(item)}  className={styles.button} style={admin}>
                                 <h5 className={styles.title}>{item.nickname}</h5>
                                 <img className={styles.icons} src={src} alt="иконка игрока" />
                             </button>
