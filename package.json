@@ -2,7 +2,6 @@
   "name": "a2g-admin-console",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://46.174.48.229:57495",
   "homepage": ".",
   "dependencies": {
     "@emotion/react": "^11.10.6",
